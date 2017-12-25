@@ -1,6 +1,7 @@
 package com.aziaka.donavan.todoapp;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     @Override
     public TaskViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.content_item, parent, false);
+        Log.d("NBR", String.valueOf(taskList.size()));
 
         return new TaskViewHolder(itemView);
     }
