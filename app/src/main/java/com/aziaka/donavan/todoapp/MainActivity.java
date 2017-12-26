@@ -1,5 +1,6 @@
 package com.aziaka.donavan.todoapp;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -18,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 import org.w3c.dom.ls.LSException;
 
 import java.util.*;
@@ -37,16 +39,19 @@ public class MainActivity extends AppCompatActivity {
         category = getResources().getStringArray(R.array.Category);
         setContentView(R.layout.activity_main);
         for (int i = 0; i < 10; i++)
-            createContent();
+            createContent(i);
         setupsEvents();
 
     }
 
-    private void createContent() {
+    private void createContent(int i) {
         int nbr = random.nextInt(category.length);
+        String cat = category[nbr];
+        if (cat.equals("All Tasks"))
+            cat = "None";
         Task task = new Task();
-        task.setCategory(category[nbr]);
-        task.setName("Ok");
+        task.setCategory(cat);
+        task.setName("Ok" + Integer.toString(i));
         task.setDate("Ok");
         list.add(task);
     }
@@ -84,6 +89,9 @@ public class MainActivity extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
+                ((TextView) parent.getChildAt(0)).setTextSize(17);
+
                 List<Task> currentList = filterListByCategory(parent.getSelectedItem().toString());
                 updateContent(currentList);
             }
