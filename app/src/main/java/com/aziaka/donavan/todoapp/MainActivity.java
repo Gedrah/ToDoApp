@@ -3,28 +3,38 @@ package com.aziaka.donavan.todoapp;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v4.widget.ListViewAutoScrollHelper;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import org.w3c.dom.ls.LSException;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class MainActivity extends AppCompatActivity {
 
     private List<Task> list;
     private TaskAdapter adapter;
+    private Random random;
+    private String[] category;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         list = new ArrayList<>();
+        random = new Random();
+        category = getResources().getStringArray(R.array.Category);
         setContentView(R.layout.activity_main);
         for (int i = 0; i < 10; i++)
             createContent();
@@ -33,8 +43,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void createContent() {
+        int nbr = random.nextInt(category.length);
         Task task = new Task();
-        task.setCategory("Ok");
+        task.setCategory(category[nbr]);
         task.setName("Ok");
         task.setDate("Ok");
         list.add(task);
@@ -53,29 +64,117 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(llm);
+
         adapter = new TaskAdapter(list);
         recyclerView.setAdapter(adapter);
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+        MenuItem item = menu.findItem(R.id.spinner);
+        // category
+        Spinner spinner = (Spinner) MenuItemCompat.getActionView(item);
+        final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.Category, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                List<Task> currentList = filterListByCategory(parent.getSelectedItem().toString());
+                updateContent(currentList);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        // searchbar
+        final MenuItem searchItem = menu.findItem(R.id.search);
+        final SearchView searchView = (SearchView)MenuItemCompat.getActionView(searchItem);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                List<Task> currentList = filterListByName(s);
+                updateContent(currentList);
+                return false;
+            }
+        });
+
+
+
         return true;
+    }
+
+    private void updateContent(List<Task> list1) {
+        adapter.updateList(list1);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.search) {
+            return true;
+        } else if (id == R.id.spinner) {
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
+
+    private List<Task> filterListByCategory(String category)
+    {
+        List<Task> currentList = new ArrayList<>();
+        Task task;
+        if (category.equals("All Tasks"))
+        {
+            for (int i = 0; i < list.size(); i++) {
+                if (!Objects.equals(list.get(i).getCategory(), "Finished"))
+                {
+                    task = list.get(i);
+                    currentList.add(task);
+                }
+            }
+        }
+        else
+        {
+            for (int i = 0; i < list.size(); i++)
+            {
+                if (Objects.equals(list.get(i).getCategory(), category))
+                {
+                    task = list.get(i);
+                    currentList.add(task);
+                }
+            }
+        }
+        return currentList;
+    }
+
+    private List<Task> filterListByName(String name)
+    {
+        List<Task> currentList = new ArrayList<>();
+        Task task;
+        for (int i = 0; i < list.size(); i++)
+        {
+            if (list.get(i).getName().toLowerCase().contains(name))
+            {
+                task = list.get(i);
+                currentList.add(task);
+            }
+        }
+        return currentList;
+    }
+
 }

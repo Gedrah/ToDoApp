@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">ToDoApp</string>
     <string name="action_settings">Settings</string>
+    <array name="Category">
+        <item>All Tasks</item>
+        <item>Work</item>
+        <item>Home</item>
+        <item>In progress</item>
+        <item>Finished</item>
+    </array>
+    <string name="title_activity_create">CreateActivity</string>
 </resources>
