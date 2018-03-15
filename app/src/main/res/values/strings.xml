@@ -1,12 +1,38 @@
 <resources>
-    <string name="app_name">ToDoApp</string>
+    <string name="app_name">todolist</string>
     <string name="action_settings">Settings</string>
+    <string name="add_new_task">Add Task</string>
+    <string name="valider">Valider</string>
+    <string name="task">Title</string>
+    <string name="task_name">Title</string>
+    <string name="delete">Delete</string>
+    <string name="date">Date</string>
+    <string name="no_tasks">No Tasks</string>
+    <string name="state_todo">TO DO</string>
+    <string name="state_inprogress">IN PROGRESS</string>
+    <string name="state_done">DONE</string>
+    <string name="all_category">All</string>
+    <string name="no_tasks_placeholder">No Tasks</string>
     <array name="Category">
-        <item>All Tasks</item>
+        <item>@string/all_category</item>
         <item>Work</item>
         <item>Home</item>
-        <item>In progress</item>
-        <item>Finished</item>
+        <item>Urgent</item>
     </array>
-    <string name="title_activity_create">CreateActivity</string>
+    <array name="State">
+        <item>@string/state_todo</item>
+        <item>@string/state_inprogress</item>
+        <item>@string/state_done</item>
+    </array>
+    <string name="edit">Edit</string>
+    <string name="description">Description</string>
+    <string name="day">Day</string>
+    <string name="time">Time</string>
+    <string name="category">Category</string>
+    <string name="status">Status</string>
+    <string name="delete_message">Are you sure to delete this task ?</string>
+    <string name="accept_message">Ok</string>
+    <string name="cancel_message">Cancel</string>
+    <string name="example_date">03 Décembre 2017</string>
+    <string name="timeText">12:30</string>
 </resources>

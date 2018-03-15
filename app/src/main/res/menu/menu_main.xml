@@ -1,16 +1,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.aziaka.donavan.todoapp.MainActivity" >
-
-    <item   android:id="@+id/spinner"
-            android:title="ActionBar Spinner"
-            app:actionViewClass="android.widget.Spinner"
-            app:showAsAction="always" />
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context="eu.epitech.todolist.Activities.MainActivity">
+    <item android:id="@+id/spinner_filter"
+          android:title="ActionBar Spinner"
+          app:actionViewClass="android.widget.Spinner"
+          app:showAsAction="always"/>
     <item android:id="@+id/search"
           android:title="search"
-          android:icon="@drawable/ic_search_black_24dp"
           app:showAsAction="always"
           app:actionViewClass="android.support.v7.widget.SearchView"/>
-
 </menu>

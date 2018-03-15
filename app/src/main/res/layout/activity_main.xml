@@ -3,14 +3,24 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.aziaka.donavan.todoapp.MainActivity">
+        tools:context="eu.epitech.todolist.Activities.MainActivity">
+
     <android.support.v7.widget.RecyclerView android:layout_width="match_parent"
                                             android:id="@+id/list"
                                             android:layout_height="match_parent"/>
+    <TextView android:layout_width="wrap_content"
+              android:id="@+id/noTask"
+              android:textColor="@color/gray"
+              android:text="@string/no_tasks_placeholder"
+              android:textSize="30dp"
+              android:layout_centerInParent="true"
+              android:textStyle="bold"
+              android:layout_height="wrap_content"/>
 
-    <android.support.design.widget.FloatingActionButton
+   <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -18,6 +28,8 @@
             android:layout_alignParentBottom="true"
             android:layout_marginEnd="15dp"
             android:layout_marginBottom="15dp"
-            android:src="@drawable/ic_add_black_24dp"
+            android:onClick="moveToCreateTask"
+            app:theme="@style/AppTheme"
+            android:src="@drawable/ic_add_white_24dp"
             app:fabSize="normal"/>
 </RelativeLayout>
